@@ -8,5 +8,5 @@ RUN apt-get update && \
         kmod \
     && apt-get clean
 
-COPY suricata.yaml /etc/suricata/suricata.yaml
-COPY rules/ /etc/suricata/rules/
+# COPY suricata.yaml /etc/suricata/suricata.yaml
+# COPY rules/ /etc/suricata/rules/
