@@ -47,11 +47,11 @@ services:
     volumes:
       - ./suricata:/etc/suricata
     command: sh -c "
-      ip addr;
+      ip addr && \
 
-      suricata -T -c /etc/suricata/suricata.yaml || echo 'CONFIG FAILED';
+      suricata -T -c /etc/suricata/suricata.yaml || echo 'CONFIG FAILED' && \
 
-      suricata -c /etc/suricata/suricata.yaml -i eth0 -i eth1 &
+      suricata -c /etc/suricata/suricata.yaml -i eth0 -i eth1 & \
 
       sleep infinity
      "
