@@ -34,8 +34,7 @@ services:
     container_name: router
     tty: true
     cap_add:
-      - NET_ADMIN
-      - NET_RAW
+      - ALL
     sysctls:
       - net.ipv4.ip_forward=1
     networks:
@@ -45,11 +44,7 @@ services:
         ipv4_address: 192.168.60.11
     volumes:
       - ./suricata:/etc/suricata
-    command: bash -c "
-      suricata -T &&
-      suricata -c /etc/suricata/suricata.yaml -i eth0 -i eth1 &
-      sleep infinity
-     "
+
 
 networks:
   net-attack:
