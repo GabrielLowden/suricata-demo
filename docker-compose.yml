@@ -46,7 +46,6 @@ services:
     volumes:
       - ./suricata:/etc/suricata
     command: bash -c "
-      sysctl -w net.ipv4.ip_forward=1 &&
       ip addr &&
       ls /etc/suricata &&
       suricata -c /etc/suricata/suricata.yaml -i eth0 -i eth1 || sleep infinity
