@@ -59,7 +59,6 @@ router:
     command: bash -c "
       apt update &&
       apt install -y iproute2 iptables tcpdump suricata &&
-      sysctl -w net.ipv4.ip_forward=1 &&
       suricata -T -c /etc/suricata/suricata.yaml || true &&
       suricata -c /etc/suricata/suricata.yaml -i eth0 -i eth1 &
       sleep infinity
