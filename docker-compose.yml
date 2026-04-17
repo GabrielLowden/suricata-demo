@@ -44,7 +44,7 @@ services:
       net-server:
         ipv4_address: 192.168.60.11
     volumes:
-      - ./suricata.yaml:/etc/suricata/suricata.yaml
+      - ./suricata:/etc/suricata
     command: bash -c "
       sysctl -w net.ipv4.ip_forward=1 &&
       suricata -c /etc/suricata/suricata.yaml -i eth0 -i eth1 &
