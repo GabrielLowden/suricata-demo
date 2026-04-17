@@ -30,7 +30,19 @@ services:
      "
 
   router:
-    image: jasonish/suricata:latest
+  build: ./router
+  container_name: router
+  tty: true
+
+  cap_add:
+    - NET_ADMIN
+    - NET_RAW
+
+  sysctls:
+    - net.ipv4.ip_forward=1
+
+router:
+    image: ubuntu:22.04
     container_name: router
     tty: true
     cap_add:
@@ -40,19 +52,16 @@ services:
     sysctls:
       - net.ipv4.ip_forward=1
     networks:
-      net-attack:
+      net-10.9.0.0:
         ipv4_address: 10.9.0.11
-      net-server:
+      net-192.168.60.0:
         ipv4_address: 192.168.60.11
-    volumes:
-      - ./suricata:/etc/suricata
-    command: sh -c "
-      ip addr && \
-
-      suricata -T -c /etc/suricata/suricata.yaml || echo 'CONFIG FAILED' && \
-
-      suricata -c /etc/suricata/suricata.yaml -i eth0 -i eth1 & \
-
+    command: bash -c "
+      apt update &&
+      apt install -y iproute2 iptables tcpdump suricata &&
+      sysctl -w net.ipv4.ip_forward=1 &&
+      suricata -T -c /etc/suricata/suricata.yaml || true &&
+      suricata -c /etc/suricata/suricata.yaml -i eth0 -i eth1 &
       sleep infinity
      "
 
