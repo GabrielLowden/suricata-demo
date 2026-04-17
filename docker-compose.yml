@@ -46,11 +46,9 @@ services:
     volumes:
       - ./suricata:/etc/suricata
     command: bash -c "
-      ip route del default  &&
-      ip route add default via 10.9.0.1 &&
-      iptables -F &&
-      suricata -c /etc/suricata/suricata.yaml -i eth0 -i eth1 &&
-      tail -f /dev/null
+      suricata -T &&
+      suricata -c /etc/suricata/suricata.yaml -i eth0 -i eth1 &
+      sleep infinity
      "
 
 networks:
